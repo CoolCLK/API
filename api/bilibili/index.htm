@@ -1,0 +1,200 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+ <head>
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+  <meta charset="utf-8">
+  <title>API - BiliBili</title>
+  <style>
+   .subtitle {
+	color: white;
+	background: green;
+	border-radius: 20px 0 0 20px;
+	padding: 1.25%;
+	font-size: 20px;
+   }
+   
+   .subviewbtn {
+    color: green;
+	cursor: pointer;
+    padding: 0.5%;
+   }
+   
+   .subviewarea {
+    border: 3px solid gray;
+    padding: 0.5%;
+	display: none;
+   }
+  </style>
+  <link rel="stylesheet" href="../../js/highlight/styles/monokai-sublime.min.css">
+  <script src="../../js/highlight/highlight.min.js"></script>
+  <script>
+   hljs.highlightAll();
+  </script>
+ </head>
+ <body>
+  <div>
+   <p class="subtitle">BiliBili API</p>
+   <p>下面列举了几个API可供使用。</p>
+   <a class="subviewbtn" onclick="toggleVisiable('videoData');">查询视频</a>
+   <a class="subviewbtn" onclick="toggleVisiable('upData');">查询UP主</a>
+   <a class="subviewbtn" onclick="toggleVisiable('upChannelData');">查询UP主频道</a>
+   <a class="subviewbtn" onclick="toggleVisiable('upVideoCounts');">查询UP主视频总数</a>
+   <a class="subviewbtn" onclick="toggleVisiable('upFollowCounts');">查询UP主粉丝/关注总数</a>
+   <a class="subviewbtn" onclick="toggleVisiable('upTop');">查询UP主置顶内容</a>
+   <a class="subviewbtn" onclick="toggleVisiable('upElecData');">查询UP主充电数据</a>
+   <a class="subviewbtn" onclick="toggleVisiable('upNotice');">查询UP主公告内容</a>
+   <div class="subviewarea" id="videoData">
+	<p>这个API可以让你查询哔哩哔哩上视频的信息。API链接: <pre><code class="language-plaintext">https://api.bilibili.com/x/web-interface/view?bvid=&lt;BV&gt;</code></pre></p>
+	<p>下面是一个原生Javascript例子：</p>
+	<pre><code class="language-javascript">
+	 var xmlhttp = null;
+	 if (window.XMLHttpRequest) {
+	  xmlHttp = new XMLHttpRequest();
+	 }
+	 else if (window.ActiveXObject) { //兼容其它浏览器
+	  xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+	 }
+	 xmlHttp.open("GET", "https://api.bilibili.com/x/web-interface/view?bvid=BV1xx411c7mu");
+	 xmlHttp.onload = function() {
+	  if (xmlHttp.readyState == 4 && xmlHttp.status == 200) { //是否已经完成请求
+	    var myJSON = JSON.parse(xmlhttp.responseText);
+	    //处理得到的Json
+		alert(myJSON.data.title);
+	  }
+	 }
+	 xmlHttp.send(null);
+	</code></pre>
+	<p>当你执行这个例子的时候，若正常的话，应该是弹出了一个消息并且消息的内容为“最终鬼畜蓝蓝路”。</p>
+	<table border="1">
+	 <tr><th colspan="3">请求参数</th></tr>
+	 <tr><th>参数名</th><th>内容</th><th>备注</th></tr>
+	 <tr><td>bvid</td><td>视频BV号</td><td></td></tr>
+	</table>
+   </div>
+   <div class="subviewarea" id="upData">
+	<p>这个API可以让你查询哔哩哔哩上UP主的信息。API链接: <pre><code class="language-plaintext">https://api.bilibili.com/x/space/acc/info?mid=&lt;UID&gt;</code></pre></p>
+	<p>下面是一个原生Javascript例子：</p>
+	<pre><code class="language-javascript">
+	 var xmlhttp = null;
+	 if (window.XMLHttpRequest) {
+	  xmlHttp = new XMLHttpRequest();
+	 }
+	 else if (window.ActiveXObject) { //兼容其它浏览器
+	  xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+	 }
+	 xmlHttp.open("GET", "https://api.bilibili.com/x/space/acc/info?mid=397180026");
+	 xmlHttp.onload = function() {
+	  if (xmlHttp.readyState == 4 && xmlHttp.status == 200) { //是否已经完成请求
+	    var myJSON = JSON.parse(xmlhttp.responseText);
+	    //处理得到的Json
+		alert(myJSON.data.mid);
+	  }
+	 }
+	 xmlHttp.send(null);
+	</code></pre>
+	<p>当你执行这个例子的时候，若正常的话，应该是弹出了一个消息并且消息的内容为“397180026”。</p>
+	<table border="1">
+	 <tr><th colspan="3">请求参数</th></tr>
+	 <tr><th>参数名</th><th>内容</th><th>备注</th></tr>
+	 <tr><td>mid</td><td>UP主UID</td><td>UID可在<url>https://space.bilibili.com</url>查看</td></tr>
+	</table>
+   </div>
+   <div class="subviewarea" id="upChannelData">
+	<p>这个API可以让你查询哔哩哔哩上UP主的频道视频。API链接: <pre><code class="language-plaintext">https://api.bilibili.com/x/space/channel/index?mid=&lt;UID&gt;</code></pre></p>
+	<table border="1">
+	 <tr><th colspan="3">请求参数</th></tr>
+	 <tr><th>参数名</th><th>内容</th><th>备注</th></tr>
+	 <tr><td>mid</td><td>UP主UID</td><td>UID可在<url>https://space.bilibili.com</url>查看</td></tr>
+	</table>
+   </div>
+   <div class="subviewarea" id="upVideoCounts">
+	<p>这个API可以让你查询哔哩哔哩上UP主发布的视频总数。API链接: <pre><code class="language-plaintext">https://api.bilibili.com/x/space/navnum?mid=&lt;UID&gt;</code></pre></p>
+	<table border="1">
+	 <tr><th colspan="3">请求参数</th></tr>
+	 <tr><th>参数名</th><th>内容</th><th>备注</th></tr>
+	 <tr><td>mid</td><td>UP主UID</td><td>UID可在<url>https://space.bilibili.com</url>查看</td></tr>
+	</table>
+   </div>
+   <div class="subviewarea" id="upFollowCounts">
+	<p>这个API可以让你查询哔哩哔哩上UP主的关注数或粉丝数。API链接: <pre><code class="language-plaintext">https://api.bilibili.com/x/relation/stat?vmid=&lt;UID&gt;</code></pre></p>
+	<table border="1">
+	 <tr><th colspan="3">请求参数</th></tr>
+	 <tr><th>参数名</th><th>内容</th><th>备注</th></tr>
+	 <tr><td>mid</td><td>UP主UID</td><td>UID可在<url>https://space.bilibili.com</url>查看</td></tr>
+	</table>
+   </div>
+   <div class="subviewarea" id="upFollowCounts">
+	<p>这个API可以让你查询哔哩哔哩上UP主的关注数或粉丝数。API链接: <pre><code class="language-plaintext">https://api.bilibili.com/x/relation/stat?vmid=&lt;UID&gt;</code></pre></p>
+	<table border="1">
+	 <tr><th colspan="3">请求参数</th></tr>
+	 <tr><th>参数名</th><th>内容</th><th>备注</th></tr>
+	 <tr><td>mid</td><td>UP主UID</td><td>UID可在<url>https://space.bilibili.com</url>查看</td></tr>
+	</table>
+   </div>
+   <div class="subviewarea" id="upStatCounts">
+	<p>这个API可以让你查询哔哩哔哩上UP主的总播放量或总浏览量。API链接: <pre><code class="language-plaintext">https://api.bilibili.com/x/space/upstat?mid=&lt;UID&gt;</code></pre></p>
+	<table border="1">
+	 <tr><th colspan="3">请求参数</th></tr>
+	 <tr><th>参数名</th><th>内容</th><th>备注</th></tr>
+	 <tr><td>mid</td><td>UP主UID</td><td>UID可在<url>https://space.bilibili.com</url>查看</td></tr>
+	</table>
+   </div>
+   <div class="subviewarea" id="upStatCounts">
+	<p>这个API可以让你查询哔哩哔哩上UP主的总播放量或总浏览量。API链接: <pre><code class="language-plaintext">https://api.bilibili.com/x/space/upstat?mid=&lt;UID&gt;</code></pre></p>
+	<table border="1">
+	 <tr><th colspan="3">请求参数</th></tr>
+	 <tr><th>参数名</th><th>内容</th><th>备注</th></tr>
+	 <tr><td>mid</td><td>UP主UID</td><td>UID可在<url>https://space.bilibili.com</url>查看</td></tr>
+	</table>
+   </div>
+   <div class="subviewarea" id="upTop">
+	<p>这个API可以让你查询哔哩哔哩上UP主的置顶内容。API链接: <pre><code class="language-plaintext">https://api.bilibili.com/x/space/top/arc?vmid=&lt;UID&gt;</code></pre></p>
+	<table border="1">
+	 <tr><th colspan="3">请求参数</th></tr>
+	 <tr><th>参数名</th><th>内容</th><th>备注</th></tr>
+	 <tr><td>mid</td><td>UP主UID</td><td>UID可在<url>https://space.bilibili.com</url>查看</td></tr>
+	</table>
+   </div>
+   <div class="subviewarea" id="upElecData">
+	<p>这个API可以让你查询哔哩哔哩上UP主的充电。API链接: <pre><code class="language-plaintext">https://api.bilibili.com/x/ugcpay-rank/elec/month/up?up_mid=&lt;UID&gt;</code></pre></p>
+	<table border="1">
+	 <tr><th colspan="3">请求参数</th></tr>
+	 <tr><th>参数名</th><th>内容</th><th>备注</th></tr>
+	 <tr><td>mid</td><td>UP主UID</td><td>UID可在<url>https://space.bilibili.com</url>查看</td></tr>
+	</table>
+   </div>
+   <div class="subviewarea" id="upNotice">
+	<p>这个API可以让你查询哔哩哔哩上UP主的公告内容。API链接: <pre><code class="language-plaintext">https://api.bilibili.com/x/space/notice?mid=&lt;UID&gt;</code></pre></p>
+	<table border="1">
+	 <tr><th colspan="3">请求参数</th></tr>
+	 <tr><th>参数名</th><th>内容</th><th>备注</th></tr>
+	 <tr><td>mid</td><td>UP主UID</td><td>UID可在<url>https://space.bilibili.com</url>查看</td></tr>
+	</table>
+   </div>
+   <div class="subviewarea" id="upNotice">
+	<p>这个API可以让你查询哔哩哔哩上UP主的公告内容。API链接: <pre><code class="language-plaintext">https://api.bilibili.com/x/space/notice?mid=&lt;UID&gt;</code></pre></p>
+	<table border="1">
+	 <tr><th colspan="3">请求参数</th></tr>
+	 <tr><th>参数名</th><th>内容</th><th>备注</th></tr>
+	 <tr><td>mid</td><td>UP主UID</td><td>UID可在<url>https://space.bilibili.com</url>查看</td></tr>
+	</table>
+   </div>
+  </div>
+  <script>
+   window.onload = function() {
+	var urlElements = document.getElementsByTagName('url');
+	for (var i = 0; i < urlElements.length; i++) {
+	 var url = urlElements[i].innerText;
+	 urlElements[i].innerHTML = "<a href=" + url + ">" + url + "</a>"
+	}
+   }
+   
+   function toggleVisiable(id) {
+    var element = document.getElementById(id);
+	if (element.style.display == 'block') element.style.display = 'none';
+	else element.style.display = 'block';
+	return;
+   }
+  </script>
+ </body>
+</html>
