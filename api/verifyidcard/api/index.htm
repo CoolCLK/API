@@ -11,7 +11,7 @@
 	else {
 	 if (requestCode == null || requestCode.length != 18) callbackJson.message = "身份证号码格式有误。";
 	}
-	document.write("<pre>" + JSON.stringify(callbackJson) + "</pre>");
+	document.documentElement.outerHTML = JSON.stringify(callbackJson);
    }
    
    function checkIdCode(code) {

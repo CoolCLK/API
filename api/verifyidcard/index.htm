@@ -37,10 +37,13 @@
    <div class="subviewarea" style="display: block;">
 	<p>这个API可以让你查询哔哩哔哩上视频的信息。API链接: <pre><code class="language-plaintext">https://coolclk.github.io/API/api/verifyidcard/api/?code=&lt;身份证号码&gt;</code></pre></p>
 	<p><b>请注意！您请求的数据并不会被储存在服务器上！<span style="text-decoration: line-through">因为站长并不会写后端。</span>若您不放心，可以稍后复制下面的<a href="#source">Javascript代码</a>。</b></p>
+	<!--
 	<p>下面您可以测试这个API是否工作。</p>
 	<input type="text" id="testId" placeholder="输入一段身份证号码...">
 	<input type="submit" onclick="testCheck(document.getElementById('testId').value);">
 	<a id="testRequest" style="color: red;"></a>
+	-->
+	<p><a href="sample.htm">这里</a>是一个例子，您可以测试这个API是否工作。</p>
 	<table border="1">
 	 <tr><th colspan="3">请求参数</th></tr>
 	 <tr><th>参数名</th><th>内容</th><th>备注</th></tr>
@@ -70,7 +73,7 @@
     var xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("GET", "api/?=" + code, true);
     xmlhttp.onload  = function() {
-	 var request = JSON.parse(xmlhttp.responseXML);
+	 var request = JSON.parse(xmlhttp.responseText);
 	 console.log(request);
 	 document.getElementById('testRequest').innerText = request.message;
 	}

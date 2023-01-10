@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+ <head>
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+  <meta charset="utf-8">
+  <title>测测你的超级英雄</title>
+  <style>
+   .background {
+    position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	color: white;
+    background: red;
+   }
+   
+   .subtitle {
+	color: white;
+	background: green;
+	border-radius: 20px;
+	padding: 1.25% 10%;
+	font-size: 25px;
+   }
+   
+   .subviewbtn {
+    color: green;
+	cursor: pointer;
+    padding: 0.5%;
+   }
+   
+   .subviewarea {
+    border: 3px solid gray;
+    padding: 0.5%;
+	display: none;
+   }
+  </style>
+ </head>
+ <body class="background">
+  <center>
+   <br>
+   <br>
+   <a class="subtitle">测测我的超级英雄</a>
+  </center>
+  <div>
+   <p>召唤需要填写身份证号码，若小朋友你没有，你可以询问你的父母或自己拿出身份证填写哦！</p>
+   <input id="inputElement" type="text" placeholder="填写身份证号码">
+   <input type="submit" onclick="playSample();" value="召唤">
+   <a id="requestElement" style="red"></a>
+   <p>填写完毕后，点击“召唤”就可以召唤属于你的超级英雄啦！</p>
+  </div>
+  <div>
+   <div>
+    <h3>Q: 如何查看我的超级英雄？</h3>
+    <p>A: 只需要滑到“<a href="javascript:void(0);" onclick="window.location.href = '#test';">马上查看我的超级英雄</a>”之后填写身份证号码就可以测啦！</p>
+   </div>
+   <div>
+    <h3>Q: 为什么我查看超级英雄告诉我“召唤超级英雄的时候出现问题，请检查身份证是否正确”？</h3>
+    <p>A: 你也许填写了错误的身份证号码，召唤超级英雄需要正确的身份证号码！你可以使用任何一个人的身份证号码，都可以马上召唤超级英雄！</p>
+   </div>
+   <div>
+    <h3>Q: 我真的召唤到超级英雄啦！</h3>
+    <p>A: <a title="只有傻子会填写正确的身份证号码">没错！这是真的！真实有效的！</a>你完全可以放心，我们保证，只要填写正确，<a title="当然是假的">超级英雄一定会出现！</a></p>
+   </div>
+   <div>
+    <a onclick="this.innerHTML = '<h3>Q: 这是不是真的啊，为什么我没有召唤到，反而出现了一个男的啊！</h3><h3>Q: 就是就是，我召唤以后我爸妈不知道为什么特别生气，说那天钱都不翼而飞了，狠狠的揍了我一顿。</h3><p>A: 以上内容纯属虚构，本页面纯属娱乐！你可以发给其TA人让TA们也图一乐！</p>';">点击查看更多小伙伴的投稿...</a>
+   </div>
+  </div>
+  <script>
+   function playSample() {
+    if (checkIdCode(document.getElementById('inputElement').value)) window.location.href = 'https://www.bilibili.com/video/BV1GJ411x7h7';
+	else document.getElementById('requestElement').innerText = '召唤超级英雄的时候出现问题，请检查身份证是否正确';
+	return;
+   }
+   
+   function checkIdCode(code) {
+    if (code == null || code.length != 18) return false;
+    var factor = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+    var random = "10X98765432".split("");
+    var total = 0;
+    for (var i = 0; i < 17; i++) {
+      total += code.charAt(i) * factor[i];
+    }
+    return random[total % 11] == code[17];
+   }
+  </script>
+ </body>
+</html>
